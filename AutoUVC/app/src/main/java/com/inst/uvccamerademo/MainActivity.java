@@ -163,6 +163,21 @@ public final class MainActivity extends Activity implements CameraDialog.CameraD
 		Toast.makeText(MainActivity.this, "usbDevice" + devList, Toast.LENGTH_SHORT).show();
 //		mUSBMonitor.requestPermission(UsbDevice);
 
+		/**
+		 *
+		 *  GPIO -> devList[0] / devList[1]
+		 *
+		 * 	mUSBMonitor.requestPermission(UsbDevice)
+		 *		-> processConnect()
+		 *
+		 * 		onConnect{
+		 * 		mHandler.openCamera(ctrlBlock);startPreview();
+		 * 		}
+		 *
+		 * 	mHandler.captureStill();
+		 * 	mHandler.closeCamera();
+		 *
+		 * */
 
 		/** 拍摄 */
 //		Toast.makeText(MainActivity.this, "抓拍", Toast.LENGTH_SHORT).show();
