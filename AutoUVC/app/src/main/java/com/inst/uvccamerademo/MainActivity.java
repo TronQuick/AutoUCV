@@ -170,7 +170,7 @@ public final class MainActivity extends Activity implements CameraDialog.CameraD
 		 * 	mUSBMonitor.requestPermission(UsbDevice)
 		 *		-> processConnect()
 		 *
-		 * 		onConnect{
+		 * 	->	onConnect{
 		 * 		mHandler.openCamera(ctrlBlock);startPreview();
 		 * 		}
 		 *
