@@ -1,4 +1,8 @@
-# UVCCameraDemo
+# AutoUVC
+
+需求：自动检测调用USB摄像头拍摄
+
+based on UVCCameraDemo
 
 Android 串口摄像头(USB 摄像头)基本使用，可预览，拍照，录像
 
