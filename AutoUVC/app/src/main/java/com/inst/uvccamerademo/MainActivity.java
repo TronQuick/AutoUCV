@@ -54,6 +54,7 @@ import com.inst.uvccamerademo.encoder.MediaSurfaceEncoder;
 import com.inst.uvccamerademo.encoder.MediaVideoEncoder;
 import com.inst.uvccamerademo.widget.CameraViewInterface;
 import com.serenegiant.usb.CameraDialog;
+import com.serenegiant.usb.DeviceFilter;
 import com.serenegiant.usb.USBMonitor;
 import com.serenegiant.usb.USBMonitor.OnDeviceConnectListener;
 import com.serenegiant.usb.USBMonitor.UsbControlBlock;
@@ -85,13 +86,13 @@ public final class MainActivity extends Activity implements CameraDialog.CameraD
      * if your camera does not support specific resolution and mode,
      * {@link UVCCamera#setPreviewSize(int, int, int)} throw exception
      */
-    private static final int PREVIEW_WIDTH = 640;
+    private static final int PREVIEW_WIDTH = 1920;
     /**
      * preview resolution(height)
      * if your camera does not support specific resolution and mode,
      * {@link UVCCamera#setPreviewSize(int, int, int)} throw exception
      */
-    private static final int PREVIEW_HEIGHT = 480;
+    private static final int PREVIEW_HEIGHT = 1080;
     /**
      * preview mode
      * if your camera does not support specific resolution and mode,
@@ -126,26 +127,26 @@ public final class MainActivity extends Activity implements CameraDialog.CameraD
 	@Override
 	protected void onCreate(final Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
-//		if (DEBUG) Log.v(TAG, "onCreate:");
+		if (DEBUG) Log.v(TAG, "onCreate:");
 
 //		if (USE_SURFACE_ENCODER)
 //			setContentView(R.layout.activity_main2);
 //		else
 			setContentView(R.layout.activity_main);
 //
-//		mToggleButton = (ToggleButton) findViewById(R.id.camera_button);
-//		mToggleButton.setOnClickListener(mOnClickListener);
+		mToggleButton = (ToggleButton) findViewById(R.id.camera_button);
+		mToggleButton.setOnClickListener(mOnClickListener);
+
+		mCaptureButton = (ImageButton)findViewById(R.id.capture_button);
+		mCaptureButton.setOnClickListener(mOnClickListener);
+		mCaptureButton.setVisibility(View.INVISIBLE);
 //
-//		mCaptureButton = (ImageButton)findViewById(R.id.capture_button);
-//		mCaptureButton.setOnClickListener(mOnClickListener);
-//		mCaptureButton.setVisibility(View.INVISIBLE);
-//
-//		final View view = findViewById(R.id.camera_view);
-//		view.setOnLongClickListener(mOnLongClickListener);
+		final View view = findViewById(R.id.camera_view);
+		view.setOnLongClickListener(mOnLongClickListener);
 //
 //
-//		mUVCCameraView = (CameraViewInterface)view;
-//		mUVCCameraView.setAspectRatio(PREVIEW_WIDTH / (float)PREVIEW_HEIGHT);
+		mUVCCameraView = (CameraViewInterface)view;
+		mUVCCameraView.setAspectRatio(PREVIEW_WIDTH / (float)PREVIEW_HEIGHT);
 //
 		mUSBMonitor = new USBMonitor(this, mOnDeviceConnectListener);
 		mHandler = CameraHandler.createHandler(this, mUVCCameraView);
@@ -158,17 +159,27 @@ public final class MainActivity extends Activity implements CameraDialog.CameraD
 
 
 		// 获取USB设备列表
+		/**
+		 *     mName1=/dev/bus/usb/001/005
+		 *     mName2=/dev/bus/usb/001/006
+		 *
+		 * */
 		List<UsbDevice> devList = mUSBMonitor.getDeviceList();
 		Log.d("usbDevice",devList+"");
+		Log.d("usbDevice",devList.get(0)+"");
+		Log.d("usbDevice",devList.get(1)+"");
+		Log.d("usbDevice",devList.get(2)+"");
 		Toast.makeText(MainActivity.this, "usbDevice" + devList, Toast.LENGTH_SHORT).show();
-//		mUSBMonitor.requestPermission(UsbDevice);
+		mUSBMonitor.register();
+//		mUSBMonitor.requestPermission(devList.get(1));
+
 
 		/**
 		 *
 		 *  GPIO -> devList[0] / devList[1]
 		 *
 		 * 	mUSBMonitor.requestPermission(UsbDevice)
-		 *		-> processConnect()
+		 *	-> processConnect()
 		 *
 		 * 	->	onConnect{
 		 * 		mHandler.openCamera(ctrlBlock);startPreview();
@@ -225,9 +236,6 @@ public final class MainActivity extends Activity implements CameraDialog.CameraD
         mCaptureButton = null;
 		super.onDestroy();
 	}
-
-
-
 
 	private final OnDeviceConnectListener mOnDeviceConnectListener = new OnDeviceConnectListener() {
 		@Override
