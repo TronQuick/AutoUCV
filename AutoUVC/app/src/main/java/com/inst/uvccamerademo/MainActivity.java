@@ -40,6 +40,7 @@ import android.os.Message;
 import android.text.TextUtils;
 import android.util.Log;
 import android.view.Surface;
+import android.view.SurfaceView;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.View.OnLongClickListener;
@@ -129,6 +130,7 @@ public final class MainActivity extends Activity implements CameraDialog.CameraD
 		super.onCreate(savedInstanceState);
 		if (DEBUG) Log.v(TAG, "onCreate:");
 
+
 //		if (USE_SURFACE_ENCODER)
 //			setContentView(R.layout.activity_main2);
 //		else
@@ -195,7 +197,17 @@ public final class MainActivity extends Activity implements CameraDialog.CameraD
 //		if (mHandler.isCameraOpened()) {
 //			mHandler.captureStill();
 //		}
+
+
+		// 关闭camera
+//		mHandler.closeCamera();
+//		mCaptureButton.setVisibility(View.INVISIBLE);
 	}
+
+
+
+
+
 
 	@Override
 	public void onResume() {
@@ -364,6 +376,8 @@ public final class MainActivity extends Activity implements CameraDialog.CameraD
 	};
 
 	private void startPreview() {
+
+//		final SurfaceTexture st = mUVCCameraView.getSurfaceTexture();
 		final SurfaceTexture st = mUVCCameraView.getSurfaceTexture();
 		mHandler.startPreview(new Surface(st));
 		runOnUiThread(new Runnable() {

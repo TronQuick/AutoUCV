@@ -33,6 +33,11 @@
 	tools:context=".MainActivity"
     tools:ignore="MergeRootFrame" >
 
+    <SurfaceView
+        android:id="@+id/camera_surface_view"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent" />
+
     <com.inst.uvccamerademo.widget.UVCCameraTextureView
         android:id="@+id/camera_view"
         android:layout_width="match_parent"
