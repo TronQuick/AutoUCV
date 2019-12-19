@@ -153,7 +153,6 @@ public final class MainActivity extends Activity implements CameraDialog.CameraD
 		mUSBMonitor = new USBMonitor(this, mOnDeviceConnectListener);
 		mHandler = CameraHandler.createHandler(this, mUVCCameraView);
 
-
 		// 获取USB设备数量
 		int usbDeviceCount = mUSBMonitor.getDeviceCount();
 		Log.d("DeviceCount",usbDeviceCount+"");
@@ -166,6 +165,7 @@ public final class MainActivity extends Activity implements CameraDialog.CameraD
 		 *     mName2=/dev/bus/usb/001/006
 		 *
 		 * */
+
 		List<UsbDevice> devList = mUSBMonitor.getDeviceList();
 		Log.d("usbDevice",devList+"");
 		Log.d("usbDevice",devList.get(0)+"");
@@ -173,7 +173,7 @@ public final class MainActivity extends Activity implements CameraDialog.CameraD
 		Log.d("usbDevice",devList.get(2)+"");
 		Toast.makeText(MainActivity.this, "usbDevice" + devList, Toast.LENGTH_SHORT).show();
 		mUSBMonitor.register();
-//		mUSBMonitor.requestPermission(devList.get(1));
+		mUSBMonitor.requestPermission(devList.get(1));
 
 
 		/**
@@ -200,12 +200,9 @@ public final class MainActivity extends Activity implements CameraDialog.CameraD
 
 
 		// 关闭camera
-//		mHandler.closeCamera();
+		mHandler.closeCamera();
 //		mCaptureButton.setVisibility(View.INVISIBLE);
 	}
-
-
-
 
 
 
